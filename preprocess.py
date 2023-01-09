@@ -1,9 +1,9 @@
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Lipinski, QED
 from rdkit import RDLogger
+from tqdm.auto import tqdm
 RDLogger.DisableLog('rdApp.*')
 
-from tqdm.auto import tqdm
 tqdm.pandas()
 
 
@@ -24,5 +24,7 @@ def extract_molecule_features(df, smiles):
     merged['AromaticRings'] = merged['Mol'].progress_apply(Lipinski.NumAromaticRings)
     merged['RingCount'] = merged['Mol'].progress_apply(Lipinski.RingCount)
     merged['ALERTS'] = merged['Mol'].progress_apply(lambda mol: QED.properties(mol).ALERTS)
+
+    merged.drop(columns=['Mol'], inplace=True)
 
     return merged

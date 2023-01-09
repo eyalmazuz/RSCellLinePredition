@@ -69,15 +69,7 @@ def fit_model(df, cat_columns, num_columns, k, epochs, batch_size):
 
 
 def main():
-    df = pd.read_csv('../../data/GDSC2_fitted_dose_response_24Jul22.csv', usecols=['DRUG_NAME', 'PATHWAY_NAME',
-                                                                                   'CELL_LINE_NAME', 'PUTATIVE_TARGET',
-                                                                                   'MIN_CONC', 'MAX_CONC',
-                                                                                   'LN_IC50'])
-    smiles = pd.read_csv('../../data/drugs.csv')
-
-    df = extract_molecule_features(df, smiles)
-
-    df.to_csv('./features_ic50.csv', index=False)
+    df = pd.read_csv('./data/features_ic50.csv')
 
     fit_model(df, ['DRUG_NAME', 'PATHWAY_NAME', 'CELL_LINE_NAME', 'PUTATIVE_TARGET'],
               ['MIN_CONC', 'MAX_CONC',
